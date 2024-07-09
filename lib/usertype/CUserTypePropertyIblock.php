@@ -21,15 +21,14 @@ class CUserTypePropertyIblock
     public static function GetUserTypeDescription()
     {
         return array(
-            'USER_TYPE_ID' => 'property_iblock', //Уникальный идентификатор типа свойств
+            'USER_TYPE_ID' => 'property_type_iblock', //Уникальный идентификатор типа свойств
             'USER_TYPE' => 'CUSTOM',
             'CLASS_NAME' => __CLASS__,
             'DESCRIPTION' => 'Свойства инфоблока',
-            'PROPERTY_TYPE' => Iblock\PropertyTable::TYPE_SECTION,
+            'PROPERTY_TYPE' => Iblock\PropertyTable::TYPE_ELEMENT,
             'ConvertToDB' => [__CLASS__, 'ConvertToDB'],
             'ConvertFromDB' => [__CLASS__, 'ConvertFromDB'],
             'GetPropertyFieldHtml' => [__CLASS__, 'GetPropertyFieldHtml'],
-            'GetPublicEditHTMLMulty' => array(__CLASS__, 'GetPublicEditHTMLMulty'),
             "GetSettingsHTML" => array(__CLASS__, "GetSettingsHTML"),
             "PrepareSettings" => array(__CLASS__, "PrepareSettings"),
         );
@@ -108,6 +107,7 @@ class CUserTypePropertyIblock
      */
     public static function GetPropertyFieldHtml($arProperty, $value, $arHtmlControl)
     {
+
         if (empty($arProperty['LINK_IBLOCK_ID'])) {
             return 'Заполните настройки свойства';
         }
@@ -124,7 +124,7 @@ class CUserTypePropertyIblock
 
         $fieldName = htmlspecialcharsbx($arHtmlControl['VALUE']);
 
-        $select = '<select name="' . $fieldName . '" size="1"><option value="">(не установлено)</option>';
+        $select = '<select name="'.$fieldName.'"  ><option value="">(не установлено)</option>';
         foreach ($arrField as $key => $val) {
             if ($key == $value['VALUE']) {
                 $select .= '<option value="' . $key . '" selected>' . $val . '</option>';
